@@ -1,0 +1,341 @@
+SOFTWARE ENGINEERING PROJECT
+
+Software requirement specification
+
+TOPIC: - Weather Monitoring And Forecasting
+SUBMITTED BY: - 
+
+Name :- Rydhym Agarwal
+SapID: - 590015433
+Name: - Shreya 
+Sapid: - 590016172
+Name: - Kreesh Singh Negi
+SapID: - 590014931
+
+
+
+ 
+
+
+
+
+
+
+1. Introduction
+1.1 Purpose
+The purpose of this Software Requirements Specification (SRS) document is to describe the functional and non-functional requirements of the AI-Based Weather Forecasting and Monitoring System.
+This system aims to provide users with real-time weather monitoring and predictive weather analysis using Artificial Intelligence techniques. The system will allow users to monitor current weather conditions, predict rainfall probability, detect weather patterns, and receive intelligent alerts for potential weather events.
+The SRS document provides a comprehensive description of the system requirements, including system functionality, external interfaces, performance requirements, design constraints, and system architecture.
+This document serves as a reference for:
+software developers
+system architects
+testers
+project managers
+stakeholders
+
+
+1.2 Document Conventions
+The following conventions are used in this document:
+Convention
+Description
+REQ-X
+Functional requirement
+SYS-X
+System feature
+NFR-X
+Non-functional requirement
+Key terms used in this document:
+Shall – mandatory requirementShould – recommended requirementMay – optional requirement
+
+
+1.3 Intended Audience
+This document is intended for multiple stakeholders involved in the development and usage of the system.
+Developers
+Developers will use this document to understand system functionality and design system components.
+System Designers
+Designers will use the SRS to create system architecture and database models.
+Test Engineers
+Testers will use the document to develop test cases for validating system functionality.
+Project Managers
+Project managers will use this document to track project progress and ensure requirements are fulfilled.
+End Users
+End users will understand the system capabilities and features.
+
+1.4 Additional Information
+Weather forecasting plays a crucial role in many industries including agriculture, aviation, transportation, and disaster management. Accurate weather prediction can help individuals and organizations make informed decisions.
+Traditional weather forecasting methods rely on meteorological analysis and numerical weather models. However, modern forecasting systems increasingly integrate machine learning techniques to improve prediction accuracy.
+The proposed system integrates machine learning algorithms with real-time weather data to provide:
+rainfall probability prediction
+weather pattern detection
+intelligent alerts
+interactive weather dashboards
+
+
+1.5 Contact Information / SRS Team Members
+Name
+ Role
+Rydhym Agarwal
+ System Developer
+Shreya                
+ System Developer
+Kreesh Negi          
+ System Developer
+Sobin CC
+ Supervisor
+
+1.6 References
+The following references were used in preparing this document:
+Software Engineering textbooks
+Research papers on machine learning based weather forecasting
+Weather data sources including meteorological datasets
+Standard SRS documentation guidelines
+
+2. Overall Description
+2.1 Product Perspective
+The AI-Based Weather Forecasting and Monitoring System is a web-based software application designed to monitor weather conditions and provide predictive insights using machine learning models.
+The system collects weather data from external sources and processes it using artificial intelligence algorithms to predict rainfall and detect weather patterns.
+System Architecture
+Weather API      ↓Weather Database      ↓AI Rainfall Prediction Model      ↓AI Weather Pattern Detection      ↓AI Smart Alert System      ↓Weather Dashboard + Emotion Based UI
+The major components of the system include:
+Weather data collection module
+Machine learning prediction module
+Pattern detection engine
+Smart alert generation system
+Weather monitoring dashboard
+
+2.2 Product Functions
+The AI-Based Weather Forecasting and Monitoring System provides several core functionalities to monitor weather conditions and generate predictive insights.
+1. Real-time Weather Monitoring
+The system collects current weather data from external weather sources and displays information such as temperature, humidity, pressure, wind speed, and cloud coverage for the selected location. This allows users to monitor live weather conditions.
+2. Weather Forecasting
+The system provides short-term and long-term weather forecasts. It predicts upcoming weather conditions such as temperature changes, rainfall possibilities, and wind patterns to help users plan their activities.
+3. AI Rainfall Prediction
+The system uses machine learning algorithms to predict the probability of rainfall. The model analyzes weather parameters like humidity, pressure, temperature, and wind speed to estimate the likelihood of rain.
+4. Weather Pattern Detection
+The system analyzes historical and real-time weather data to detect patterns such as sudden pressure drops, temperature changes, or increasing humidity that may indicate possible storms or rainfall.
+5. Intelligent Alert Generation
+The system generates alerts when specific weather conditions are predicted. For example, if rainfall or severe weather is expected, the system notifies users so they can take necessary precautions.
+
+6. Weather Analytics Visualization
+The system presents weather data using charts and graphs. These visualizations help users understand weather trends such as temperature changes and rainfall probability over time.
+7. Emotion-Based User Interface
+The system dynamically changes the interface theme based on weather conditions. For example, sunny weather may show a bright theme, while rainy weather may display a darker or blue theme to enhance user experience.
+
+2.3 User Classes and Characteristics
+The system has two main user classes.
+General Users
+General users are individuals who use the system to check weather forecasts and receive alerts.
+Characteristics:
+basic computer knowledge
+access through web browsers
+moderate frequency of usage
+
+System Administrator
+Administrators manage system operations and maintain system functionality.
+Responsibilities include:
+monitoring system performance
+managing database records
+updating machine learning models
+
+2.4 Operating Environment
+The system will operate in the following environment:
+Component
+Technology
+Frontend
+React / HTML / CSS
+Backend
+Node.js / Python
+Database
+MongoDB
+ML Framework
+Scikit-learn
+Operating System
+Windows / Linux
+Users will access the system through modern web browsers such as Chrome or Firefox.
+2.5 User Environment
+Users interact with the system through a graphical interface that displays weather information in a visually appealing format.
+User interface components include:
+weather dashboard
+weather charts
+rainfall probability indicators
+alert notifications
+The interface must be intuitive and easy to use.
+
+2.6 Design / Implementation Constraints
+The system must comply with the following constraints:
+reliance on external weather data sources
+machine learning model training requirements
+internet connectivity requirements
+hardware limitations
+Additionally, the accuracy of the system depends on the quality of training data used.
+
+2.7 Assumptions and Dependencies
+Assumptions include:
+weather data sources provide reliable information
+machine learning models can achieve acceptable prediction accuracy
+users have internet access
+Dependencies include:
+weather data providers
+machine learning frameworks
+cloud hosting services
+
+3. Functional Requirements
+3.1 Weather Monitoring
+3.1.1 Description and Priority
+The system shall provide real-time weather monitoring for selected locations. This feature allows users to view the current weather conditions of a particular city or region. The system retrieves weather data from reliable weather data sources and displays it on the dashboard.
+This functionality helps users stay updated with the latest weather conditions and supports better decision-making for daily activities.
+Priority: High
+3.1.2 Action / Result
+Action:The user enters or selects a location from the system interface.
+Result:The system retrieves weather information from the weather data source and displays the current weather conditions on the dashboard.
+The displayed information includes temperature, humidity, atmospheric pressure, and wind speed. The system continuously updates the data to ensure that users receive accurate and up-to-date weather information.
+
+3.1.3 Functional Requirements
+REQ-1: The system shall display the current temperature of the selected location to inform users about the present weather conditions.
+REQ-2: The system shall display humidity levels to indicate the amount of moisture present in the air.
+REQ-3: The system shall display atmospheric pressure, which helps in understanding weather changes and potential storm conditions.
+REQ-4: The system shall display wind speed so users can understand the strength of wind in the selected location.
+REQ-5: The system shall update weather data periodically (e.g., every few minutes) to ensure the information displayed to the user remains accurate and current.
+
+3.2 Weather Forecast
+Description and Priority
+The system shall provide weather forecasts for upcoming hours and days for the selected location. This feature helps users understand expected weather conditions and plan their activities accordingly.
+Priority: High
+
+Action / Result
+Action:The system retrieves forecast data for the selected location.
+Result:The system displays predicted weather information such as temperature, rainfall probability, and wind conditions using charts or graphs.
+
+Functional Requirements
+REQ-6: The system shall provide hourly weather forecasts for short-term predictions.
+REQ-7: The system shall provide daily weather forecasts for upcoming days.
+REQ-8: The system shall display forecast data using charts or graphs for better visualization.
+3.3 AI Rainfall Prediction Model
+Description and Priority
+The system shall use machine learning algorithms to predict the probability of rainfall based on current weather conditions. The prediction is generated using weather parameters such as temperature, humidity, pressure, and wind speed.
+Priority: High
+Action / Result
+Weather parameters → machine learning model → rainfall probability.
+Functional Requirements
+REQ-9: System shall collect weather parameters.
+REQ-10: System shall preprocess data for machine learning.
+REQ-11: System shall generate rainfall probability prediction.
+REQ-12: System shall display rainfall probability on dashboard.
+
+3.4 AI Weather Pattern Detection
+Description and Priority
+The system shall detect weather patterns by analyzing both historical and real-time weather data. This feature helps identify unusual weather conditions such as rapid pressure drops or sudden temperature changes that may indicate upcoming storms or rainfall.
+Priority: High
+Action / Result
+Weather data analyzed → weather pattern identified.
+Functional Requirements
+REQ-13: System shall analyze temperature trends.
+REQ-14: System shall detect pressure changes.
+REQ-15: System shall detect potential storm patterns.
+
+3.5 AI Smart Alert System
+Description and Priority
+The system shall generate smart alerts based on AI predictions and detected weather patterns. This feature helps notify users about possible weather events such as rainfall or storms so they can take necessary precautions.
+Priority: High
+Action / Result
+Prediction result → alert generated → user notified.
+Functional Requirements
+REQ-16: System shall generate rainfall alerts.
+REQ-17: System shall generate storm alerts.
+REQ-18: System shall notify users through dashboard alerts.
+
+
+
+4. Other Nonfunctional Requirements
+4.1 Performance Requirements
+The system shall meet the following performance requirements to ensure smooth operation and a good user experience.
+System response time less than 2 seconds:The system should respond quickly to user requests, such as retrieving weather information or displaying forecasts. This ensures that users can access weather data without noticeable delays.
+Weather data updated every 10 minutes:The system should periodically refresh weather data to maintain accuracy and provide users with the most recent weather conditions and predictions.
+Support multiple simultaneous users:The system should be capable of handling multiple users accessing the platform at the same time without affecting performance or causing system slowdowns.
+
+4.2 Safety Requirements
+The system should ensure that incorrect or false alerts are minimized to prevent unnecessary panic or confusion among users. The AI prediction models and pattern detection algorithms should analyze weather data carefully before generating alerts.
+The system should only generate alerts when the predicted weather conditions exceed predefined thresholds. Proper validation of weather data should also be performed to reduce the chances of incorrect predictions or system errors.
+This helps maintain user trust and ensures that alerts are reliable and meaningful.
+4.3 Security Requirements
+The system shall implement security measures to protect user information and ensure safe communication between system components.
+Secure API communication:All communication between the system and external weather data sources should be protected using secure protocols to prevent unauthorized access or data interception.
+Protection of user data:The system shall ensure that user information such as login details and preferences are securely stored and protected from unauthorized access.
+Secure authentication mechanisms:The system shall provide authentication methods to verify user identity before granting access to system features. This helps ensure that only authorized users can access the application.
+
+4.4 Software Quality Attributes
+The system should exhibit the following software quality attributes to ensure reliability, efficiency, and ease of use.
+Reliability:The system should operate consistently without failures or unexpected errors. It should provide accurate weather information and predictions while maintaining stable performance during normal operation.
+Usability:The user interface should be simple, clear, and easy to navigate. Users should be able to access weather information, forecasts, and alerts quickly without requiring technical knowledge.
+Maintainability:The system should be designed in a modular and organized manner so that developers can easily update the system, fix bugs, or improve features without affecting other components.
+Scalability:The system should be able to handle an increasing number of users and larger volumes of weather data without significant performance degradation
+
+4.5 Project Documentation
+Project documentation includes:
+system architecture documentation
+design documentation
+developer documentation
+
+4.6 User Documentation
+User documentation includes:
+user manual
+installation guide
+troubleshooting guide
+
+5. ER Diagram
+The ER diagram represents the database structure of the system.
+Entities include:
+User
+Location
+Weather Data
+Rain Prediction
+Weather Pattern
+Alert
+Attributes include temperature, humidity, pressure, and rainfall probability.
+(Insert ER Diagram here)
+
+6. DFD Diagram
+6.1 Context Level DFD (Level 0)
+External entities:
+User
+Weather API
+Data flows:
+weather request
+weather data
+alert notifications
+
+6.2 Level 1 DFD
+Processes:
+Weather Data Collection
+Rainfall Prediction
+Pattern Detection
+Alert Generation
+Dashboard Display
+
+6.4 Description of Each Process
+Weather Data CollectionThis process collects weather information from external weather data sources or APIs. The system retrieves parameters such as temperature, humidity, pressure, wind speed, and cloud coverage. The collected data is then stored in the system database for further processing and analysis.
+Rainfall PredictionThis process applies machine learning algorithms to analyze the collected weather parameters. Based on the analysis, the system predicts the probability of rainfall and generates a rainfall prediction result.
+Pattern DetectionThis process analyzes both historical and real-time weather data to identify weather patterns and trends. It detects unusual changes such as sudden temperature increases or pressure drops that may indicate upcoming weather events.
+Alert GenerationThis process generates alerts based on the results of rainfall prediction and pattern detection. If certain weather conditions exceed predefined thresholds, the system creates alerts to notify users about possible weather events.
+Dashboard DisplayThis process displays weather information, forecasts, rainfall predictions, and alerts on the user dashboard. The dashboard provides an easy-to-understand interface where users can monitor weather conditions and view system notifications.
+
+7. Use Case Diagram
+Actors:
+User
+Administrator
+Use cases:
+View weather data
+Predict rainfall
+Detect weather patterns
+Receive alerts
+Monitor dashboard
+(Insert Use Case Diagram)
+8. Conclusion
+The AI-Based Weather Forecasting and Monitoring System combines real-time weather monitoring with machine learning techniques to provide accurate weather insights and predictive alerts. The system collects weather data, analyzes it using AI models, and presents the results through an interactive dashboard.
+By integrating rainfall prediction, weather pattern detection, and intelligent alert generation, the system enables users to stay informed about changing weather conditions. The visual dashboard and forecast features help users easily understand weather trends.
+Overall, the system improves weather awareness and supports better decision-making by providing reliable weather predictions and timely alerts.
+
+References
+Software Engineering textbooks
+Weather forecasting research papers
+Machine learning documentation
