@@ -1,0 +1,19 @@
+# Node
+node_modules/
+npm-debug.log
+.env
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# AI Models & Data (optional but good practice)
+# We will leave models tracked so you don't lose the best_rain_predictor
+# models/*.joblib
+# datasets/raw/*.csv
+
+# OS Files
+.DS_Store
+Thumbs.db
