@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  BarChart, Bar, Legend
+  BarChart, Bar, Legend, RadialBarChart, RadialBar
 } from 'recharts';
 import './Dashboard.css';
 
@@ -30,8 +30,10 @@ const Dashboard = ({ activeTab, onWeatherUpdate, theme }) => {
   const [alerts, setAlerts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchCity, setSearchCity] = useState('Delhi');
+  const [searchCity, setSearchCity] = useState('New Delhi');
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [aiPrediction, setAiPrediction] = useState(null);
+  const [modelInfo, setModelInfo] = useState(null);
 
   const fetchWeather = useCallback(async (city) => {
     setLoading(true);
@@ -66,6 +68,47 @@ const Dashboard = ({ activeTab, onWeatherUpdate, theme }) => {
     setLoading(false);
   }, [onWeatherUpdate]);
 
+  const fetchAiPrediction = useCallback(async (city) => {
+    try {
+      const res = await axios.get(`${API_BASE}/weather/predict`, { params: { city } });
+      setAiPrediction(res.data.data);
+    } catch (err) {
+      console.error('AI prediction unavailable:', err.message);
+      setAiPrediction(null);
+    }
+  }, []);
+
+  // Fallback model data (from model_metadata.json v5) shown when Flask is offline
+  const FALLBACK_MODEL_INFO = {
+    model_name: 'StackingEnsemble',
+    metrics: { accuracy: 0.8884, precision: 0.8811, recall: 0.8811, f1_score: 0.8811, roc_auc: 0.9528 },
+    feature_count: 66,
+    all_results: {
+      'StackingEnsemble':  { metrics: { accuracy: 0.8884, f1_score: 0.8811 } },
+      'MLP_NeuralNet':     { metrics: { accuracy: 0.8860, f1_score: 0.8839 } },
+      'VotingEnsemble':    { metrics: { accuracy: 0.8853, f1_score: 0.8804 } },
+      'LightGBM_Tuned':    { metrics: { accuracy: 0.8849, f1_score: 0.8771 } },
+      'XGBoost_Tuned':     { metrics: { accuracy: 0.8846, f1_score: 0.8792 } },
+      'RandomForest':      { metrics: { accuracy: 0.8836, f1_score: 0.8765 } },
+      'CatBoost':          { metrics: { accuracy: 0.8836, f1_score: 0.8796 } },
+      'GradientBoosting':  { metrics: { accuracy: 0.8825, f1_score: 0.8806 } },
+      'ExtraTrees':        { metrics: { accuracy: 0.8822, f1_score: 0.8779 } },
+      'LogisticRegression':{ metrics: { accuracy: 0.8801, f1_score: 0.8742 } },
+    },
+    _offline: true, // flag so UI can show "(cached)" label
+  };
+
+  const fetchModelInfo = useCallback(async () => {
+    try {
+      const res = await axios.get(`${API_BASE}/weather/model`);
+      setModelInfo(res.data.data);
+    } catch (err) {
+      console.error('Model info unavailable (Flask offline) — using cached data');
+      // Show cached metadata so Analytics tab is never blank
+      setModelInfo(FALLBACK_MODEL_INFO);
+    }
+  }, []);
+
   const fetchAlerts = useCallback(async () => {
     try {
       const res = await axios.get(`${API_BASE}/alerts`);
@@ -81,14 +124,22 @@ const Dashboard = ({ activeTab, onWeatherUpdate, theme }) => {
   useEffect(() => {
     fetchWeather(searchCity);
     fetchAlerts();
+    fetchAiPrediction(searchCity);
+    fetchModelInfo();
     // Auto-refresh every 10 minutes (SRS: NFR Performance)
-    const interval = setInterval(() => fetchWeather(searchCity), 600000);
+    const interval = setInterval(() => {
+      fetchWeather(searchCity);
+      fetchAiPrediction(searchCity);
+    }, 600000);
     return () => clearInterval(interval);
   }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchCity.trim()) fetchWeather(searchCity.trim());
+    if (searchCity.trim()) {
+      fetchWeather(searchCity.trim());
+      fetchAiPrediction(searchCity.trim());
+    }
   };
 
   // Prepare forecast chart data
@@ -103,6 +154,9 @@ const Dashboard = ({ activeTab, onWeatherUpdate, theme }) => {
     : [];
 
   const rainfallProbability = weatherData?.forecast?.[0]?.pop ?? 0;
+  const aiRainProb = aiPrediction?.prediction?.rain_probability != null
+    ? Math.round(aiPrediction.prediction.rain_probability * 100)
+    : null;
 
   return (
     <main className="main-content">
@@ -168,29 +222,58 @@ const Dashboard = ({ activeTab, onWeatherUpdate, theme }) => {
                 </div>
               </div>
 
-              {/* Rainfall Probability Card (SRS REQ-12) */}
+              {/* AI Rain Prediction Card (SRS REQ-12) */}
               <div className="card rainfall-card">
                 <div className="card-header">
-                  <Droplets size={18} />
-                  <span>Rainfall Probability</span>
+                  <CloudRain size={18} />
+                  <span>AI Rain Prediction</span>
+                  {aiPrediction?.prediction?.model_used && (
+                    <span className="model-badge">{aiPrediction.prediction.model_used}</span>
+                  )}
                 </div>
-                <div className="rainfall-gauge">
-                  <svg viewBox="0 0 120 120" className="circular-progress">
-                    <circle cx="60" cy="60" r="50" className="progress-bg" />
-                    <circle
-                      cx="60" cy="60" r="50"
-                      className="progress-fill"
-                      style={{
-                        strokeDasharray: `${rainfallProbability * 3.14} 314`,
-                      }}
-                    />
-                  </svg>
-                  <div className="rainfall-value">{Math.round(rainfallProbability)}%</div>
-                </div>
-                <div className="rainfall-label">
-                  {rainfallProbability > 70 ? 'High chance of rain' :
-                   rainfallProbability > 40 ? 'Moderate chance' : 'Low chance'}
-                </div>
+                {aiRainProb !== null ? (
+                  <>
+                    <div className="rainfall-gauge">
+                      <svg viewBox="0 0 120 120" className="circular-progress">
+                        <circle cx="60" cy="60" r="50" className="progress-bg" />
+                        <circle
+                          cx="60" cy="60" r="50"
+                          className="progress-fill"
+                          style={{
+                            strokeDasharray: `${aiRainProb * 3.14} 314`,
+                          }}
+                        />
+                      </svg>
+                      <div className="rainfall-value">{aiRainProb}%</div>
+                    </div>
+                    <div className="rainfall-label">
+                      {aiPrediction.prediction.will_rain
+                        ? `Rain likely tomorrow`
+                        : 'No rain expected tomorrow'}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="rainfall-gauge">
+                      <svg viewBox="0 0 120 120" className="circular-progress">
+                        <circle cx="60" cy="60" r="50" className="progress-bg" />
+                        <circle
+                          cx="60" cy="60" r="50"
+                          className="progress-fill"
+                          style={{
+                            strokeDasharray: `${rainfallProbability * 3.14} 314`,
+                          }}
+                        />
+                      </svg>
+                      <div className="rainfall-value">{Math.round(rainfallProbability)}%</div>
+                    </div>
+                    <div className="rainfall-label">
+                      {rainfallProbability > 70 ? 'High chance of rain' :
+                       rainfallProbability > 40 ? 'Moderate chance' : 'Low chance'}
+                      <span className="ai-fallback-note"> (WeatherAPI — AI engine offline)</span>
+                    </div>
+                  </>
+                )}
               </div>
 
               {/* Metric Cards */}
@@ -473,7 +556,41 @@ const Dashboard = ({ activeTab, onWeatherUpdate, theme }) => {
                   </div>
                 </div>
               </div>
-            </div>
+              {/* AI Model Comparison Card */}
+              {modelInfo && (
+                <div className="card model-info-card">
+                  <div className="card-header">
+                    <TrendingUp size={18} />
+                    <span>AI Model Comparison</span>
+                    <span className="model-badge">
+                      {modelInfo.model_name} (Best){modelInfo._offline ? ' — cached' : ''}
+                    </span>
+                  </div>
+                  <div className="model-metrics-grid">
+                    {Object.entries(modelInfo.all_results || {}).sort((a, b) => b[1].metrics.f1_score - a[1].metrics.f1_score).map(([name, result]) => (
+                      <div key={name} className={`model-row ${name === modelInfo.model_name ? 'best-model' : ''}`}>
+                        <span className="model-name">{name}</span>
+                        <div className="model-bars">
+                          <div className="model-bar-group">
+                            <span className="bar-label">F1</span>
+                            <div className="bar-track">
+                              <div className="bar-fill" style={{ width: `${result.metrics.f1_score * 100}%` }} />
+                            </div>
+                            <span className="bar-value">{(result.metrics.f1_score * 100).toFixed(1)}%</span>
+                          </div>
+                          <div className="model-bar-group">
+                            <span className="bar-label">Acc</span>
+                            <div className="bar-track">
+                              <div className="bar-fill accuracy" style={{ width: `${result.metrics.accuracy * 100}%` }} />
+                            </div>
+                            <span className="bar-value">{(result.metrics.accuracy * 100).toFixed(1)}%</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}            </div>
           )}
         </>
       )}
