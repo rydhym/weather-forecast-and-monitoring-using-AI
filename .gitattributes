@@ -1,0 +1,4 @@
+# Force GitHub Linguist to ignore the frontend and backend JS/CSS so the repo shows up as Python
+weather-ai-system/** linguist-vendored
+*.css linguist-vendored
+*.html linguist-vendored
