@@ -36,6 +36,9 @@ const fetchWeatherData = async (city) => {
 
     const weatherDocument = {
       location: location.name,
+      // Real coordinates from WeatherAPI — used by Flask AI engine for city-based features
+      latitude: location.lat,
+      longitude: location.lon,
       temp: current.temp_c,
       humidity: current.humidity,
       pressure: current.pressure_mb,
@@ -48,14 +51,18 @@ const fetchWeatherData = async (city) => {
       forecast: fcData
     };
 
-    // Upsert into our Database
-    const savedData = await WeatherData.findOneAndUpdate(
-      { location: location.name },
-      weatherDocument,
-      { new: true, upsert: true }
-    );
+    // Try to save to MongoDB (non-blocking — don't crash if DB is down)
+    try {
+      await WeatherData.findOneAndUpdate(
+        { location: location.name },
+        weatherDocument,
+        { new: true, upsert: true }
+      );
+    } catch (dbErr) {
+      logger.warn(`MongoDB save failed (non-fatal): ${dbErr.message}`);
+    }
 
-    return savedData;
+    return weatherDocument;
   } catch (error) {
     logger.error(`Error fetching weather data for ${city}:`, error);
     const msg = error.response?.data?.error?.message || 'Failed to fetch weather data';

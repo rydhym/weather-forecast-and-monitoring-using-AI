@@ -1,0 +1,272 @@
+{
+  "best_model": "StackingEnsemble",
+  "optimal_threshold": 0.545,
+  "metrics": {
+    "accuracy": 0.8884,
+    "precision": 0.8969,
+    "recall": 0.8658,
+    "f1_score": 0.8811,
+    "roc_auc": 0.9528
+  },
+  "feature_columns": [
+    "temp_max",
+    "temp_min",
+    "temp_mean",
+    "humidity_mean",
+    "pressure_mean",
+    "wind_speed_max",
+    "cloud_cover",
+    "solar_radiation",
+    "evapotranspiration",
+    "temp_range",
+    "rain_today",
+    "dew_point",
+    "dew_point_depression",
+    "wind_dir_sin",
+    "wind_dir_cos",
+    "humidity_pressure_ratio",
+    "wind_cloud_interaction",
+    "moisture_index",
+    "temp_humidity_interaction",
+    "month_sin",
+    "month_cos",
+    "doy_sin",
+    "doy_cos",
+    "rain_lag_1",
+    "rain_lag_2",
+    "rain_lag_3",
+    "rain_lag_5",
+    "rain_lag_7",
+    "temp_mean_lag_1",
+    "temp_mean_lag_2",
+    "temp_mean_lag_3",
+    "pressure_lag_1",
+    "pressure_lag_2",
+    "pressure_lag_3",
+    "humidity_lag_1",
+    "humidity_lag_2",
+    "humidity_lag_3",
+    "cloud_cover_lag_1",
+    "cloud_cover_lag_2",
+    "rain_streak",
+    "rain_rolling_3d",
+    "rain_rolling_7d",
+    "temp_rolling_3d",
+    "temp_rolling_7d",
+    "pressure_rolling_3d",
+    "pressure_rolling_7d",
+    "humidity_rolling_3d",
+    "humidity_rolling_7d",
+    "cloud_rolling_3d",
+    "cloud_rolling_7d",
+    "pressure_change_1d",
+    "pressure_change_3d",
+    "humidity_change_1d",
+    "humidity_change_3d",
+    "cloud_change_1d",
+    "latitude",
+    "longitude",
+    "climate_zone",
+    "city_bangalore",
+    "city_bhopal",
+    "city_chandigarh",
+    "city_delhi",
+    "city_guwahati",
+    "city_kochi",
+    "city_kolkata",
+    "city_patna"
+  ],
+  "all_feature_columns": [
+    "temp_max",
+    "temp_min",
+    "temp_mean",
+    "humidity_mean",
+    "pressure_mean",
+    "wind_speed_max",
+    "cloud_cover",
+    "solar_radiation",
+    "evapotranspiration",
+    "temp_range",
+    "rain_today",
+    "dew_point",
+    "dew_point_depression",
+    "wind_dir_sin",
+    "wind_dir_cos",
+    "humidity_pressure_ratio",
+    "wind_cloud_interaction",
+    "moisture_index",
+    "temp_humidity_interaction",
+    "month_sin",
+    "month_cos",
+    "doy_sin",
+    "doy_cos",
+    "rain_lag_1",
+    "rain_lag_2",
+    "rain_lag_3",
+    "rain_lag_5",
+    "rain_lag_7",
+    "temp_mean_lag_1",
+    "temp_mean_lag_2",
+    "temp_mean_lag_3",
+    "pressure_lag_1",
+    "pressure_lag_2",
+    "pressure_lag_3",
+    "humidity_lag_1",
+    "humidity_lag_2",
+    "humidity_lag_3",
+    "cloud_cover_lag_1",
+    "cloud_cover_lag_2",
+    "rain_streak",
+    "rain_rolling_3d",
+    "rain_rolling_7d",
+    "temp_rolling_3d",
+    "temp_rolling_7d",
+    "pressure_rolling_3d",
+    "pressure_rolling_7d",
+    "humidity_rolling_3d",
+    "humidity_rolling_7d",
+    "cloud_rolling_3d",
+    "cloud_rolling_7d",
+    "pressure_change_1d",
+    "pressure_change_3d",
+    "humidity_change_1d",
+    "humidity_change_3d",
+    "cloud_change_1d",
+    "latitude",
+    "longitude",
+    "climate_zone",
+    "is_southern_hemisphere",
+    "city_bangalore",
+    "city_bhopal",
+    "city_chandigarh",
+    "city_chennai",
+    "city_delhi",
+    "city_goa",
+    "city_guwahati",
+    "city_hyderabad",
+    "city_jaipur",
+    "city_kochi",
+    "city_kolkata",
+    "city_lucknow",
+    "city_mumbai",
+    "city_patna",
+    "city_pune"
+  ],
+  "pipeline_version": "v5",
+  "improvements": [
+    "SMOTE oversampling",
+    "CatBoost added",
+    "Mutual information feature selection",
+    "60 combos \u00d7 5-fold CV tuning",
+    "Wider MLP (512\u2192256\u2192128)",
+    "ExtraTrees baseline",
+    "Stacking with passthrough=True"
+  ],
+  "all_results": {
+    "LogisticRegression": {
+      "metrics": {
+        "accuracy": 0.8801,
+        "precision": 0.8761,
+        "recall": 0.8723,
+        "f1_score": 0.8742,
+        "roc_auc": 0.949
+      },
+      "threshold": 0.495
+    },
+    "RandomForest": {
+      "metrics": {
+        "accuracy": 0.8836,
+        "precision": 0.8881,
+        "recall": 0.8651,
+        "f1_score": 0.8765,
+        "roc_auc": 0.949
+      },
+      "threshold": 0.535
+    },
+    "GradientBoosting": {
+      "metrics": {
+        "accuracy": 0.8825,
+        "precision": 0.8557,
+        "recall": 0.9069,
+        "f1_score": 0.8806,
+        "roc_auc": 0.9499
+      },
+      "threshold": 0.325
+    },
+    "ExtraTrees": {
+      "metrics": {
+        "accuracy": 0.8822,
+        "precision": 0.8692,
+        "recall": 0.8867,
+        "f1_score": 0.8779,
+        "roc_auc": 0.949
+      },
+      "threshold": 0.47
+    },
+    "XGBoost_Tuned": {
+      "metrics": {
+        "accuracy": 0.8846,
+        "precision": 0.8789,
+        "recall": 0.8795,
+        "f1_score": 0.8792,
+        "roc_auc": 0.9516
+      },
+      "threshold": 0.495
+    },
+    "LightGBM_Tuned": {
+      "metrics": {
+        "accuracy": 0.8849,
+        "precision": 0.8949,
+        "recall": 0.86,
+        "f1_score": 0.8771,
+        "roc_auc": 0.95
+      },
+      "threshold": 0.59
+    },
+    "CatBoost": {
+      "metrics": {
+        "accuracy": 0.8836,
+        "precision": 0.8685,
+        "recall": 0.8911,
+        "f1_score": 0.8796,
+        "roc_auc": 0.9508
+      },
+      "threshold": 0.445
+    },
+    "MLP_NeuralNet": {
+      "metrics": {
+        "accuracy": 0.886,
+        "precision": 0.8601,
+        "recall": 0.9091,
+        "f1_score": 0.8839,
+        "roc_auc": 0.951
+      },
+      "threshold": 0.41
+    },
+    "VotingEnsemble": {
+      "metrics": {
+        "accuracy": 0.8853,
+        "precision": 0.8763,
+        "recall": 0.8846,
+        "f1_score": 0.8804,
+        "roc_auc": 0.9523
+      },
+      "threshold": 0.47
+    },
+    "StackingEnsemble": {
+      "metrics": {
+        "accuracy": 0.8884,
+        "precision": 0.8969,
+        "recall": 0.8658,
+        "f1_score": 0.8811,
+        "roc_auc": 0.9528
+      },
+      "threshold": 0.545
+    }
+  },
+  "train_samples": 11609,
+  "test_samples": 2903,
+  "smote_applied": true,
+  "features_selected": 66,
+  "features_total": 74
+}

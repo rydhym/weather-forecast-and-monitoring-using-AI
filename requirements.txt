@@ -1,0 +1,15 @@
+# AI/ML Libraries
+scikit-learn==1.5.2
+pandas==2.2.3
+numpy==1.26.4
+xgboost==2.1.3
+lightgbm==4.5.0
+
+# API Server
+flask==3.1.0
+flask-cors==5.0.1
+
+# Utilities
+joblib==1.4.2
+requests==2.32.3
+python-dotenv==1.1.0

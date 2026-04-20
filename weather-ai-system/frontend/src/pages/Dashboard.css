@@ -653,3 +653,105 @@
     font-size: 3rem;
   }
 }
+}
+
+/* ===== AI Model Badge ===== */
+.model-badge {
+  margin-left: auto;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.ai-fallback-note {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ===== AI Model Comparison Card ===== */
+.model-info-card {
+  grid-column: 1 / -1;
+}
+
+.model-metrics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.model-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md, 8px);
+  transition: background 0.15s;
+}
+
+.model-row:hover {
+  background: var(--bg-hover, rgba(0,0,0,0.03));
+}
+
+.model-row.best-model {
+  background: var(--accent-light, rgba(59, 130, 246, 0.08));
+  border: 1px solid var(--accent, #3b82f6);
+}
+
+.model-name {
+  min-width: 140px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.model-bars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.model-bar-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bar-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  min-width: 24px;
+  text-align: right;
+}
+
+.bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--border, #e5e5e5);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: var(--accent, #3b82f6);
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.bar-fill.accuracy {
+  background: #10b981;
+}
+
+.bar-value {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 42px;
+}
+
