@@ -1,0 +1,335 @@
+/* Container */
+.weather-animation-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Rain Effect */
+.rain-drop {
+  position: absolute;
+  width: 2px;
+  height: 25px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.8));
+  bottom: 100%;
+  animation: rain-fall linear infinite;
+}
+
+@keyframes rain-fall {
+  0% {
+    transform: translateY(0) scaleY(1);
+  }
+
+  100% {
+    transform: translateY(110vh) scaleY(1.5);
+  }
+}
+
+/* Snow Effect */
+.snowflake {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  bottom: 100%;
+  animation: snow-fall linear infinite;
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translateY(55vh) translateX(15px) scale(1.05);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translateY(110vh) translateX(-5px) scale(0.9);
+    opacity: 0.4;
+  }
+}
+
+/* Cloud Effect */
+.moving-cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 100px;
+  animation: cloud-move linear infinite;
+  filter: blur(6px);
+}
+
+.moving-cloud::before,
+.moving-cloud::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  filter: blur(4px);
+}
+
+.moving-cloud::before {
+  width: 60%;
+  height: 140%;
+  top: -55%;
+  left: 15%;
+}
+
+.moving-cloud::after {
+  width: 50%;
+  height: 110%;
+  top: -45%;
+  right: 15%;
+}
+
+@keyframes cloud-move {
+  0% {
+    transform: translateX(-400px);
+  }
+
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+/* Thunder Effect */
+.thunder-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  opacity: 0;
+  animation: thunder-flash 2s infinite;
+}
+
+@keyframes thunder-flash {
+
+  0%,
+  88%,
+  100% {
+    opacity: 0;
+  }
+
+  89% {
+    opacity: 0.7;
+    background: #bbdefb;
+  }
+
+  90% {
+    opacity: 0;
+  }
+
+  93% {
+    opacity: 1;
+    background: white;
+  }
+
+  94% {
+    opacity: 0;
+  }
+
+  97% {
+    opacity: 0.5;
+    background: #90caf9;
+  }
+
+  98% {
+    opacity: 0;
+  }
+}
+
+/* Mist Effect */
+.mist-layer {
+  position: absolute;
+  top: 0;
+  left: -10%;
+  width: 120%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.15) 50%, transparent 80%);
+  animation: mist-drift 15s infinite alternate ease-in-out;
+}
+
+.mist-layer-2 {
+  position: absolute;
+  top: 0;
+  left: -5%;
+  width: 110%;
+  height: 100%;
+  background: radial-gradient(ellipse at 30% 40%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 45%, transparent 75%);
+  animation: mist-drift-2 20s infinite alternate ease-in-out;
+}
+
+.mist-layer-3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at 70% 60%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.1) 40%, transparent 70%);
+  animation: mist-drift-3 25s infinite alternate ease-in-out;
+}
+
+@keyframes mist-drift {
+  0% {
+    transform: translateX(-3%) translateY(-2%);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translateX(3%) translateY(2%);
+    opacity: 1;
+  }
+}
+
+@keyframes mist-drift-2 {
+  0% {
+    transform: translateX(4%) translateY(3%);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translateX(-4%) translateY(-1%);
+    opacity: 0.8;
+  }
+}
+
+@keyframes mist-drift-3 {
+  0% {
+    transform: translateX(-2%) translateY(1%);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translateX(2%) translateY(-3%);
+    opacity: 0.9;
+  }
+}
+
+/* Sun Effect - Bright & Airy */
+.sun-glow {
+  position: absolute;
+  top: -150px;
+  right: -150px;
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.45) 0%, rgba(186, 230, 253, 0.2) 40%, transparent 75%);
+  border-radius: 50%;
+  animation: sun-pulse 8s infinite alternate ease-in-out;
+  z-index: 1;
+}
+
+.sun-rays {
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 1000px;
+  height: 1000px;
+  z-index: 0;
+  animation: sun-rotate 120s linear infinite;
+}
+
+.sun-ray {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 1500px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.25) 0%, transparent 50%);
+  transform-origin: top;
+  transform: translate(-50%, -50%) rotate(calc(var(--i) * (360deg / 5)));
+  filter: blur(8px);
+}
+
+@keyframes sun-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.reflection {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(10px);
+  animation: float-reflection 12s infinite ease-in-out;
+}
+
+@keyframes float-reflection {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translate(20px, -30px) scale(1.1);
+    opacity: 0.6;
+  }
+}
+
+.subtle-clouds {
+  opacity: 0.25;
+  filter: blur(15px);
+}
+
+@keyframes sun-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* Star Effect */
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.8);
+  animation: star-twinkle infinite alternate ease-in-out;
+}
+
+@keyframes star-twinkle {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Moon Glow Effect */
+.moon-glow {
+  position: absolute;
+  top: 50px;
+  right: 15%;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(200, 220, 255, 0.15) 0%, rgba(200, 220, 255, 0.05) 40%, transparent 70%);
+  border-radius: 50%;
+  animation: sun-pulse 6s infinite alternate ease-in-out;
+}

@@ -41,27 +41,30 @@ const Dashboard = ({ activeTab, onWeatherUpdate, theme }) => {
       const data = res.data.data;
       setWeatherData(data);
       setLastUpdated(new Date());
-      if (data.condition) onWeatherUpdate(data.condition);
+      if (data.condition) onWeatherUpdate(data.condition, data.temp);
     } catch (err) {
       console.error(err);
       // Fallback to mock data if backend not available
+      const conditions = ['Clear', 'Rain', 'Clouds', 'Thunderstorm', 'Snow', 'Mist'];
+      const dynamicCondition = conditions[city.length % conditions.length];
+
       const mock = {
         location: city,
-        temp: 32,
-        condition: 'Clear',
-        humidity: 58,
-        windSpeed: 12,
+        temp: 20 + (city.length % 15),
+        condition: dynamicCondition,
+        humidity: 58 + (city.length % 20),
+        windSpeed: 12 + (city.length % 10),
         pressure: 1012,
         visibility: 8,
         uvIndex: 7,
-        feelsLike: 35,
+        feelsLike: 22 + (city.length % 15),
         icon: '01d',
         forecast: generateMockForecast()
       };
       setWeatherData(mock);
       setLastUpdated(new Date());
-      onWeatherUpdate(mock.condition);
-      setError('Using offline data — backend not connected');
+      onWeatherUpdate(mock.condition, mock.temp);
+      setError('Using simulated offline data — backend not connected');
     }
     setLoading(false);
   }, [onWeatherUpdate]);
@@ -171,7 +174,7 @@ const Dashboard = ({ activeTab, onWeatherUpdate, theme }) => {
               {/* Rainfall Probability Card (SRS REQ-12) */}
               <div className="card rainfall-card">
                 <div className="card-header">
-                  <Droplets size={18} />
+                  <Droplets size={18} style={{ color: '#3b82f6' }} />
                   <span>Rainfall Probability</span>
                 </div>
                 <div className="rainfall-gauge">
@@ -182,6 +185,7 @@ const Dashboard = ({ activeTab, onWeatherUpdate, theme }) => {
                       className="progress-fill"
                       style={{
                         strokeDasharray: `${rainfallProbability * 3.14} 314`,
+                        stroke: '#3b82f6'
                       }}
                     />
                   </svg>
@@ -189,13 +193,13 @@ const Dashboard = ({ activeTab, onWeatherUpdate, theme }) => {
                 </div>
                 <div className="rainfall-label">
                   {rainfallProbability > 70 ? 'High chance of rain' :
-                   rainfallProbability > 40 ? 'Moderate chance' : 'Low chance'}
+                    rainfallProbability > 40 ? 'Moderate chance' : 'Low chance'}
                 </div>
               </div>
 
               {/* Metric Cards */}
               <div className="card metric-small">
-                <Droplets size={20} className="metric-icon" />
+                <Droplets size={20} className="metric-icon" style={{ color: '#3b82f6' }} />
                 <div className="metric-info">
                   <span className="metric-label">Humidity</span>
                   <span className="metric-val">{weatherData?.humidity}%</span>
@@ -252,14 +256,15 @@ const Dashboard = ({ activeTab, onWeatherUpdate, theme }) => {
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
-                    <XAxis dataKey="time" tick={{ fontSize: 11, fill: 'var(--text-muted)' }} />
-                    <YAxis tick={{ fontSize: 11, fill: 'var(--text-muted)' }} />
+                    <XAxis dataKey="time" tick={{ fontSize: 11, fill: 'var(--text-muted)', fontWeight: 700 }} />
+                    <YAxis tick={{ fontSize: 11, fill: 'var(--text-muted)', fontWeight: 700 }} />
                     <Tooltip
                       contentStyle={{
                         background: 'var(--bg-card)',
                         border: '1px solid var(--border)',
                         borderRadius: '8px',
-                        fontSize: '12px'
+                        fontSize: '12px',
+                        fontWeight: 700
                       }}
                     />
                     <Area type="monotone" dataKey="temp" stroke="var(--accent)" fill="url(#tempGrad)" name="Temp °C" />
